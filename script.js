@@ -181,4 +181,72 @@ loadingStyle.textContent = `
         opacity: 1;
     }
 `;
-document.head.appendChild(loadingStyle); 
+document.head.appendChild(loadingStyle);
+
+// Mobile Horizontal Scroll Prevention
+function preventHorizontalScroll() {
+    // モバイルデバイスの判定
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+    
+    if (isMobile) {
+        // 横スクロールを完全に防止
+        document.body.style.overflowX = 'hidden';
+        document.documentElement.style.overflowX = 'hidden';
+        
+        // タッチイベントでの横スワイプを制御
+        let startX, startY, isScrolling;
+        
+        document.addEventListener('touchstart', function(e) {
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+            isScrolling = null;
+        }, { passive: true });
+        
+        document.addEventListener('touchmove', function(e) {
+            if (!startX || !startY) return;
+            
+            const currentX = e.touches[0].clientX;
+            const currentY = e.touches[0].clientY;
+            const diffX = Math.abs(currentX - startX);
+            const diffY = Math.abs(currentY - startY);
+            
+            // 初回の移動方向を判定
+            if (isScrolling === null) {
+                isScrolling = diffX > diffY ? 'horizontal' : 'vertical';
+            }
+            
+            // 横方向のスクロールを防止
+            if (isScrolling === 'horizontal') {
+                e.preventDefault();
+            }
+        }, { passive: false });
+        
+        document.addEventListener('touchend', function() {
+            startX = null;
+            startY = null;
+            isScrolling = null;
+        }, { passive: true });
+        
+        // 追加のCSS適用
+        const mobileStyle = document.createElement('style');
+        mobileStyle.textContent = `
+            @media (max-width: 768px) {
+                html, body {
+                    overflow-x: hidden !important;
+                    width: 100% !important;
+                    max-width: 100vw !important;
+                    touch-action: pan-y !important;
+                }
+                
+                * {
+                    max-width: 100vw !important;
+                }
+            }
+        `;
+        document.head.appendChild(mobileStyle);
+    }
+}
+
+// ページ読み込み時とリサイズ時に実行
+preventHorizontalScroll();
+window.addEventListener('resize', preventHorizontalScroll); 
