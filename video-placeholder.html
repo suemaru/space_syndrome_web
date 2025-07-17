@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Placeholder Demo</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            overflow: hidden;
+        }
+        
+        .video-placeholder {
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            position: relative;
+        }
+        
+        /* Grid Background */
+        .grid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 204, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 204, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: grid-move 10s linear infinite;
+        }
+        
+        @keyframes grid-move {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(50px, 50px);
+            }
+        }
+        
+        /* Floating Elements */
+        .float-element {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border: 2px solid #00ffcc;
+            border-radius: 10px;
+            opacity: 0.3;
+            animation: float-around 20s infinite ease-in-out;
+        }
+        
+        .float-element:nth-child(2) {
+            left: 20%;
+            top: 20%;
+            animation-delay: -5s;
+            border-color: #ff006e;
+        }
+        
+        .float-element:nth-child(3) {
+            left: 70%;
+            top: 60%;
+            animation-delay: -10s;
+            border-color: #ffbe0b;
+        }
+        
+        .float-element:nth-child(4) {
+            left: 10%;
+            top: 70%;
+            animation-delay: -15s;
+        }
+        
+        @keyframes float-around {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(100px, -50px) rotate(90deg);
+            }
+            50% {
+                transform: translate(-50px, 100px) rotate(180deg);
+            }
+            75% {
+                transform: translate(-100px, -100px) rotate(270deg);
+            }
+        }
+        
+        /* Center Text */
+        .center-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #00ffcc;
+            font-family: monospace;
+            font-size: 24px;
+            text-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+        }
+        
+        .info {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #666;
+            font-family: sans-serif;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="video-placeholder">
+        <div class="grid"></div>
+        <div class="float-element"></div>
+        <div class="float-element"></div>
+        <div class="float-element"></div>
+        <div class="float-element"></div>
+        <div class="center-text">VIDEO COMING SOON</div>
+        <div class="info">
+            <p>このプレースホルダーは実際の動画が用意されるまでの仮表示です</p>
+            <p>実装時は &lt;video&gt; タグに置き換えてください</p>
+        </div>
+    </div>
+</body>
+</html> 
