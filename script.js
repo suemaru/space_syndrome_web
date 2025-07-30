@@ -54,8 +54,22 @@ document.querySelectorAll('.timeline-item, .concept-card, .feature-card, .game-c
 // Video Loading Optimization
 const heroVideo = document.querySelector('.video-background video');
 if (heroVideo) {
+    // Show video immediately if loaded
+    if (heroVideo.readyState >= 2) {
+        heroVideo.style.opacity = '1';
+    }
+    
     heroVideo.addEventListener('loadeddata', () => {
         heroVideo.style.opacity = '1';
+    });
+    
+    heroVideo.addEventListener('canplaythrough', () => {
+        heroVideo.style.opacity = '1';
+    });
+    
+    // Try to play the video
+    heroVideo.play().catch(e => {
+        console.log('Video autoplay prevented:', e);
     });
     
     // Fallback for video loading issues
