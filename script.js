@@ -2,9 +2,11 @@
 window.addEventListener('scroll', () => {
     const navbar = document.querySelector('.navbar');
     if (window.scrollY > 50) {
-        navbar.style.background = 'rgba(5, 5, 5, 0.95)';
+        navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+        navbar.style.borderBottomColor = 'rgba(13, 35, 63, 0.15)';
     } else {
-        navbar.style.background = 'rgba(10, 10, 10, 0.9)';
+        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+        navbar.style.borderBottomColor = 'rgba(13, 35, 63, 0.1)';
     }
 });
 
@@ -97,16 +99,25 @@ hamburger.addEventListener('click', () => {
 const style = document.createElement('style');
 style.textContent = `
     @media (max-width: 768px) {
+        .hamburger {
+            display: flex;
+        }
+        
         .nav-links {
             position: fixed;
             top: 70px;
             right: -100%;
-            width: 250px;
+            width: 280px;
             height: calc(100vh - 70px);
-            background: rgba(10, 10, 10, 0.95);
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-left: 1px solid rgba(13, 35, 63, 0.1);
+            box-shadow: -4px 0 20px rgba(13, 35, 63, 0.1);
             flex-direction: column;
             padding: 2rem;
+            gap: 1.5rem;
             transition: right 0.3s ease;
+            align-items: flex-start;
         }
         
         .nav-links.active {
@@ -114,8 +125,16 @@ style.textContent = `
             display: flex;
         }
         
+        .nav-links a {
+            font-size: 1.1rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(13, 35, 63, 0.1);
+            width: 100%;
+        }
+        
         .hamburger.active span:nth-child(1) {
             transform: rotate(-45deg) translate(-5px, 6px);
+            background: var(--color-blue-primary);
         }
         
         .hamburger.active span:nth-child(2) {
@@ -124,28 +143,29 @@ style.textContent = `
         
         .hamburger.active span:nth-child(3) {
             transform: rotate(45deg) translate(-5px, -6px);
+            background: var(--color-blue-primary);
+        }
+        
+        .hamburger:hover span {
+            background: var(--color-blue-primary);
         }
     }
 `;
 document.head.appendChild(style);
 
-// Glitch Effect Enhancement
-const glitchElement = document.querySelector('.glitch');
-let glitchInterval;
+// Hero Logo Interaction Enhancement
+const heroLogo = document.querySelector('.hero-logo');
+if (heroLogo) {
+    heroLogo.addEventListener('mouseenter', () => {
+        heroLogo.style.transform = 'translateY(-6px) scale(1.03)';
+        heroLogo.style.filter = 'drop-shadow(0 12px 24px rgba(13, 35, 63, 0.25))';
+    });
 
-glitchElement.addEventListener('mouseenter', () => {
-    glitchInterval = setInterval(() => {
-        glitchElement.style.textShadow = `
-            ${Math.random() * 10 - 5}px ${Math.random() * 10 - 5}px 0 #00ffcc,
-            ${Math.random() * 10 - 5}px ${Math.random() * 10 - 5}px 0 #ff006e
-        `;
-    }, 50);
-});
-
-glitchElement.addEventListener('mouseleave', () => {
-    clearInterval(glitchInterval);
-    glitchElement.style.textShadow = '';
-});
+    heroLogo.addEventListener('mouseleave', () => {
+        heroLogo.style.transform = '';
+        heroLogo.style.filter = '';
+    });
+}
 
 // Timeline Animation
 const timelineItems = document.querySelectorAll('.timeline-item');
@@ -153,14 +173,28 @@ timelineItems.forEach((item, index) => {
     item.style.animationDelay = `${index * 0.2}s`;
 });
 
-// Card Hover Effects
-document.querySelectorAll('.concept-card, .feature-card, .game-card, .video-card, .impact-card').forEach(card => {
+// Enhanced Card Hover Effects for White Design
+document.querySelectorAll('.feature-card, .game-card, .video-card, .impact-card').forEach(card => {
     card.addEventListener('mouseenter', function() {
-        this.style.transform = 'translateY(-10px) scale(1.02)';
+        // 上品な浮遊効果
+        this.style.transform = 'translateY(-8px)';
+        this.style.transition = 'all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)';
+        
+        // アイコンの微細なアニメーション
+        const icon = this.querySelector('.icon');
+        if (icon) {
+            icon.style.transform = 'scale(1.1) rotate(5deg)';
+            icon.style.transition = 'transform 0.3s ease';
+        }
     });
     
     card.addEventListener('mouseleave', function() {
         this.style.transform = '';
+        
+        const icon = this.querySelector('.icon');
+        if (icon) {
+            icon.style.transform = '';
+        }
     });
 });
 

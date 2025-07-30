@@ -1,14 +1,56 @@
 /* Global Styles */
 :root {
-    --primary-color: #00ffcc;
-    --secondary-color: #ff006e;
-    --accent-color: #ffbe0b;
-    --dark-bg: #0a0a0a;
-    --darker-bg: #050505;
-    --light-text: #ffffff;
-    --gray-text: #b0b0b0;
-    --card-bg: rgba(255, 255, 255, 0.05);
-    --border-color: rgba(255, 255, 255, 0.1);
+    /* メイン色 */
+    --color-white: #FFFFFF;
+    --color-dark: #0D233F;
+    
+    /* 補助色 */
+    --color-blue-primary: #0B318F;
+    --color-blue-secondary: #3E5A7C;
+    --color-cyan: #56C1DE;
+    --color-orange: #F8B62D;
+    --color-yellow: #FAEE00;
+    --color-gray-light: #F7F8F8;
+    
+    /* セマンティックカラー */
+    --color-text-primary: #0D233F;
+    --color-text-secondary: #3E5A7C;
+    --color-text-muted: #6B7280;
+    --color-background: #FFFFFF;
+    --color-background-alt: #F7F8F8;
+    --color-background-dark: #0D233F;
+    
+    /* スペーシングシステム */
+    --space-xs: 0.5rem;   /* 8px */
+    --space-sm: 1rem;     /* 16px */
+    --space-md: 1.5rem;   /* 24px */
+    --space-lg: 2rem;     /* 32px */
+    --space-xl: 3rem;     /* 48px */
+    --space-2xl: 4rem;    /* 64px */
+    --space-3xl: 6rem;    /* 96px */
+    
+    /* タイポグラフィスケール */
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 1.875rem;
+    --font-size-4xl: 2.25rem;
+    --font-size-5xl: 3rem;
+    --font-size-6xl: 4rem;
+    
+    /* 旧変数の互換性維持（段階的移行用） */
+    --primary-color: var(--color-blue-primary);
+    --secondary-color: var(--color-cyan);
+    --accent-color: var(--color-orange);
+    --dark-bg: var(--color-background-dark);
+    --darker-bg: var(--color-dark);
+    --light-text: var(--color-white);
+    --gray-text: var(--color-text-muted);
+    --card-bg: rgba(13, 35, 63, 0.05);
+    --border-color: rgba(13, 35, 63, 0.1);
 }
 
 * {
@@ -25,18 +67,81 @@ html {
 
 body {
     font-family: 'Noto Sans JP', sans-serif;
-    background-color: var(--dark-bg);
-    color: var(--light-text);
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
     line-height: 1.6;
     overflow-x: hidden;
     width: 100%;
     max-width: 100vw;
 }
 
+/* 日本語タイポグラフィシステム */
+/* 日本語大見出し */
+.heading-large-jp {
+    font-family: "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W5", "Noto Sans JP", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-weight: 500;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+}
+
+/* 日本語見出し */
+.heading-jp {
+    font-family: "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3", "Noto Sans JP", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-weight: 300;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    line-height: 1.4;
+    letter-spacing: 0.05em;
+}
+
+/* 英語見出し */
+.heading-en {
+    font-family: "Arial Unicode MS", Arial, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.2rem, 2.5vw, 2rem);
+    line-height: 1.3;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+/* 本文・長文 */
+.body-text {
+    font-family: "Hiragino Mincho ProN", "ヒラギノ明朝 ProN W3", "Noto Serif JP", "Yu Mincho", "Times New Roman", serif;
+    font-weight: 300;
+    font-size: clamp(1rem, 1.2vw, 1.125rem);
+    line-height: 1.8;
+    letter-spacing: 0.05em;
+}
+
+/* システムフォントフォールバック */
+.fallback-sans {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP", sans-serif;
+}
+
+.fallback-serif {
+    font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
+}
+
+/* グリッドシステム */
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 clamp(1rem, 4vw, 2rem);
+}
+
+.grid {
+    display: grid;
+    gap: clamp(1rem, 3vw, 2rem);
+}
+
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+@media (max-width: 768px) {
+    .grid-2, .grid-3, .grid-4 {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* Navigation */
@@ -44,8 +149,9 @@ body {
     position: fixed;
     top: 0;
     width: 100%;
-    background: rgba(10, 10, 10, 0.9);
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(13, 35, 63, 0.1);
     z-index: 1000;
     transition: all 0.3s ease;
 }
@@ -54,38 +160,53 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
+    padding: var(--space-sm) var(--space-lg);
 }
 
 .logo {
-    font-family: 'Orbitron', monospace;
-    font-size: 1.5rem;
-    font-weight: 900;
-    color: var(--primary-color);
-    text-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+    display: flex;
+    align-items: center;
+}
+
+.logo-img {
+    height: 40px;
+    width: auto;
+    transition: all 0.3s ease;
+}
+
+.logo-img:hover {
+    transform: scale(1.05);
 }
 
 .nav-links {
     display: flex;
-    gap: 2rem;
+    gap: var(--space-lg);
 }
 
 .nav-links a {
-    color: var(--light-text);
+    color: var(--color-text-primary);
     text-decoration: none;
+    font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    font-weight: 400;
+    font-size: var(--font-size-base);
     transition: all 0.3s ease;
     position: relative;
+    padding: var(--space-xs) 0;
 }
 
 .nav-links a::after {
     content: '';
     position: absolute;
-    bottom: -5px;
+    bottom: -2px;
     left: 0;
     width: 0;
     height: 2px;
-    background: var(--primary-color);
+    background: var(--color-blue-primary);
     transition: width 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--color-blue-primary);
 }
 
 .nav-links a:hover::after {
@@ -96,14 +217,16 @@ body {
     display: none;
     flex-direction: column;
     cursor: pointer;
+    padding: var(--space-xs);
 }
 
 .hamburger span {
     width: 25px;
     height: 3px;
-    background: var(--light-text);
+    background: var(--color-text-primary);
     margin: 3px 0;
-    transition: 0.3s;
+    border-radius: 2px;
+    transition: all 0.3s ease;
 }
 
 /* Hero Section */
@@ -114,6 +237,28 @@ body {
     align-items: center;
     justify-content: center;
     overflow: hidden;
+}
+
+/* Subtle gradient background with auxiliary colors */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 20% 80%, rgba(86, 193, 222, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(11, 49, 143, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 50%, rgba(248, 182, 45, 0.08) 0%, transparent 50%);
+    animation: subtleFloat 20s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes subtleFloat {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    33% { transform: translate(-2%, 2%) rotate(120deg); }
+    66% { transform: translate(2%, -2%) rotate(240deg); }
 }
 
 .video-background {
@@ -149,9 +294,9 @@ body {
     height: 100%;
     background: linear-gradient(
         135deg,
-        rgba(0, 255, 204, 0.1) 0%,
-        rgba(10, 10, 10, 0.3) 50%,
-        rgba(255, 0, 110, 0.1) 100%
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(13, 35, 63, 0.1) 50%,
+        rgba(255, 255, 255, 0.1) 100%
     );
     backdrop-filter: blur(1px);
 }
@@ -161,107 +306,93 @@ body {
     z-index: 1;
 }
 
-.glitch {
-    font-family: 'Orbitron', monospace;
-    font-size: 5rem;
-    font-weight: 900;
-    text-transform: uppercase;
+.hero-title {
     position: relative;
-    color: var(--light-text);
-    letter-spacing: 3px;
-    animation: glitch-skew 1s infinite linear alternate-reverse;
+    margin-bottom: var(--space-lg);
+    opacity: 0;
+    transform: translateY(30px);
+    animation: heroFadeIn 1.2s ease-out 0.3s forwards;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.glitch::before,
-.glitch::after {
-    content: attr(data-text);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+.hero-logo {
+    width: 90vw;
+    height: auto;
+    max-width: 90vw;
+    filter: drop-shadow(0 4px 8px rgba(13, 35, 63, 0.1));
+    transition: all 0.4s ease;
 }
 
-.glitch::before {
-    animation: glitch-1 0.2s infinite;
-    color: var(--primary-color);
-    z-index: -1;
+ .hero-logo:hover {
+    transform: translateY(-4px) scale(1.02);
+    filter: drop-shadow(0 8px 16px rgba(13, 35, 63, 0.2));
 }
 
-.glitch::after {
-    animation: glitch-2 0.2s infinite;
-    color: var(--secondary-color);
-    z-index: -2;
-}
-
-@keyframes glitch-1 {
-    0%, 100% {
-        clip-path: inset(0 0 0 0);
-        transform: translate(0);
-    }
-    20% {
-        clip-path: inset(20% 0 60% 0);
-        transform: translate(-2px, 2px);
-    }
-    40% {
-        clip-path: inset(50% 0 20% 0);
-        transform: translate(2px, -2px);
-    }
-    60% {
-        clip-path: inset(10% 0 80% 0);
-        transform: translate(-2px, -2px);
-    }
-    80% {
-        clip-path: inset(80% 0 10% 0);
-        transform: translate(2px, 2px);
+@keyframes heroFadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
-@keyframes glitch-skew {
-    0%, 100% {
-        transform: skew(0deg);
-    }
-    20% {
-        transform: skew(2deg);
-    }
-    40% {
-        transform: skew(-2deg);
-    }
-    60% {
-        transform: skew(1deg);
-    }
-    80% {
-        transform: skew(-1deg);
-    }
-}
+
+
+
 
 .subtitle {
-    font-size: 1.5rem;
-    margin: 1rem 0;
-    color: var(--primary-color);
-    text-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+    font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
+    font-weight: 500;
+    margin: var(--space-sm) 0;
+    color: var(--color-blue-primary);
+    letter-spacing: 0.05em;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: heroFadeIn 1.2s ease-out 0.6s forwards;
 }
 
 .tagline {
-    font-size: 1.1rem;
-    color: var(--gray-text);
-    margin-bottom: 2rem;
+    font-family: "Hiragino Mincho ProN", "Noto Serif JP", serif;
+    font-size: clamp(1rem, 2vw, 1.125rem);
+    font-weight: 300;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-2xl);
+    line-height: 1.6;
+    letter-spacing: 0.05em;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: heroFadeIn 1.2s ease-out 0.9s forwards;
 }
 
 .cta-button {
-    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-    color: var(--light-text);
-    border: none;
-    padding: 1rem 2rem;
-    font-size: 1.1rem;
+    background: linear-gradient(135deg, #0B318F 0%, #3E5A7C 50%, #56C1DE 100%);
+    background-size: 200% 200%;
+    animation: heroFadeIn 1.2s ease-out 1.2s forwards, gradientShift 8s ease infinite;
+    color: var(--color-white);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: var(--space-sm) var(--space-2xl);
+    font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    font-size: var(--font-size-lg);
+    font-weight: 500;
     cursor: pointer;
     border-radius: 50px;
     transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 700;
+    letter-spacing: 0.05em;
     position: relative;
     overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(11, 49, 143, 0.2),
+                inset 0 1px 1px rgba(255, 255, 255, 0.3);
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 .cta-button::before {
@@ -271,8 +402,8 @@ body {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.2);
-    transition: left 0.3s ease;
+    background: rgba(255, 255, 255, 0.1);
+    transition: left 0.4s ease;
 }
 
 .cta-button:hover::before {
@@ -280,82 +411,147 @@ body {
 }
 
 .cta-button:hover {
+    background: var(--color-blue-secondary);
     transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(0, 255, 204, 0.3);
+    box-shadow: 0 8px 24px rgba(11, 49, 143, 0.3);
 }
 
-.scroll-indicator {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-}
 
-.scroll-indicator span {
-    display: block;
-    width: 30px;
-    height: 50px;
-    border: 2px solid var(--primary-color);
-    border-radius: 25px;
-    position: relative;
-}
-
-.scroll-indicator span::after {
-    content: '';
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    width: 6px;
-    height: 6px;
-    background: var(--primary-color);
-    border-radius: 50%;
-    transform: translateX(-50%);
-    animation: scroll 2s infinite;
-}
-
-@keyframes scroll {
-    0% {
-        opacity: 0;
-        top: 10px;
-    }
-    50% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-        top: 30px;
-    }
-}
 
 /* Section Titles */
 .section-title {
     text-align: center;
-    margin-bottom: 4rem;
+    margin-bottom: var(--space-3xl);
     position: relative;
 }
 
 .title-en {
     display: block;
-    font-family: 'Orbitron', monospace;
-    font-size: 3rem;
-    font-weight: 900;
-    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    font-family: "Arial Unicode MS", Arial, sans-serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 700;
+    background: linear-gradient(90deg, #0B318F 0%, #56C1DE 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-bottom: 0.5rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-xs);
+    line-height: 1.2;
 }
 
 .title-ja {
     display: block;
-    font-size: 1.2rem;
-    color: var(--gray-text);
+    font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-weight: 300;
+    color: var(--color-text-secondary);
+    letter-spacing: 0.05em;
+}
+
+/* カードコンポーネントシステム */
+.card {
+    background: var(--color-white);
+    border: 1px solid rgba(13, 35, 63, 0.1);
+    border-radius: 12px;
+    padding: var(--space-lg);
+    box-shadow: 0 2px 8px rgba(13, 35, 63, 0.08);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle color accent on top of cards */
+.card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #56C1DE 0%, #3E5A7C 50%, #0B318F 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(11, 49, 143, 0.05) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(13, 35, 63, 0.12);
+    border-color: rgba(11, 49, 143, 0.2);
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+.card:hover::after {
+    opacity: 1;
+}
+
+.card h3 {
+    font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-sm);
+    font-size: var(--font-size-xl);
+}
+
+.card p {
+    font-family: "Hiragino Mincho ProN", "Noto Serif JP", serif;
+    font-weight: 300;
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    letter-spacing: 0.02em;
+}
+
+/* ボタンシステム */
+.btn-primary {
+    background: var(--color-blue-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: 8px;
+    padding: var(--space-sm) var(--space-lg);
+    font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    font-weight: 500;
+    font-size: var(--font-size-base);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+}
+
+.btn-primary:hover {
+    background: var(--color-blue-secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(11, 49, 143, 0.3);
+}
+
+/* セクション共通スタイル */
+.section {
+    padding: var(--space-3xl) 0;
+}
+
+.section:nth-child(even) {
+    background: var(--color-background-alt);
 }
 
 /* World Section */
 .world-section {
-    padding: 5rem 0;
-    background: var(--darker-bg);
+    padding: var(--space-3xl) 0;
+    background: var(--color-background-dark);
+    color: var(--color-white);
 }
 
 .timeline-container {
@@ -466,141 +662,273 @@ body {
 
 /* Project Section */
 .project-section {
-    padding: 5rem 0;
+    padding: var(--space-3xl) 0;
+    background: var(--color-background);
 }
 
 .project-intro {
     text-align: center;
-    margin-bottom: 4rem;
+    margin-bottom: var(--space-3xl);
 }
 
 .lead-text {
-    font-size: 1.5rem;
-    line-height: 2;
-    color: var(--gray-text);
+    font-family: "Hiragino Mincho ProN", "Noto Serif JP", serif;
+    font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--color-text-secondary);
+    letter-spacing: 0.05em;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .feature-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-lg);
 }
 
 .feature-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    padding: 2rem;
+    background: var(--color-white);
+    border: 1px solid rgba(13, 35, 63, 0.1);
+    border-radius: 12px;
+    padding: var(--space-xl);
     text-align: center;
     transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(11, 49, 143, 0.05) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
 }
 
 .feature-card:hover {
-    transform: translateY(-10px);
-    background: rgba(0, 255, 204, 0.1);
-    border-color: var(--primary-color);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(13, 35, 63, 0.15);
+    border-color: rgba(11, 49, 143, 0.2);
+}
+
+.feature-card:hover::before {
+    opacity: 1;
 }
 
 .feature-card .icon {
     font-size: 3rem;
-    margin-bottom: 1rem;
+    margin-bottom: var(--space-lg);
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+}
+
+/* Different color glow for each icon */
+.feature-card:nth-child(1) .icon {
+    filter: drop-shadow(0 2px 8px rgba(86, 193, 222, 0.3));
+}
+
+.feature-card:nth-child(2) .icon {
+    filter: drop-shadow(0 2px 8px rgba(248, 182, 45, 0.3));
+}
+
+.feature-card:nth-child(3) .icon {
+    filter: drop-shadow(0 2px 8px rgba(11, 49, 143, 0.3));
+}
+
+.feature-card:nth-child(4) .icon {
+    filter: drop-shadow(0 2px 8px rgba(250, 238, 0, 0.3));
+}
+
+.feature-card:hover .icon {
+    transform: translateY(-4px) scale(1.1);
+}
+
+.feature-card:nth-child(1):hover .icon {
+    filter: drop-shadow(0 4px 16px rgba(86, 193, 222, 0.6));
+}
+
+.feature-card:nth-child(2):hover .icon {
+    filter: drop-shadow(0 4px 16px rgba(248, 182, 45, 0.6));
+}
+
+.feature-card:nth-child(3):hover .icon {
+    filter: drop-shadow(0 4px 16px rgba(11, 49, 143, 0.6));
+}
+
+.feature-card:nth-child(4):hover .icon {
+    filter: drop-shadow(0 4px 16px rgba(250, 238, 0, 0.6));
 }
 
 .feature-card h3 {
-    color: var(--primary-color);
-    margin-bottom: 1rem;
+    font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-sm);
+    font-size: var(--font-size-xl);
+    letter-spacing: 0.02em;
+}
+
+.feature-card p {
+    font-family: "Hiragino Mincho ProN", "Noto Serif JP", serif;
+    font-weight: 300;
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    letter-spacing: 0.02em;
 }
 
 /* Game Section */
 .game-section {
-    padding: 5rem 0;
-    background: var(--darker-bg);
+    padding: var(--space-3xl) 0;
+    background: var(--color-background-alt);
 }
 
 .game-types {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-bottom: 3rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--space-lg);
+    margin-bottom: var(--space-2xl);
 }
 
 .game-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
+    background: var(--color-white);
+    border: 1px solid rgba(13, 35, 63, 0.1);
+    border-radius: 12px;
     overflow: hidden;
     transition: all 0.3s ease;
+    position: relative;
 }
 
 .game-card:hover {
-    transform: scale(1.05);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(13, 35, 63, 0.15);
 }
 
 .game-card.type1:hover {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 30px rgba(0, 255, 204, 0.3);
+    border-color: var(--color-blue-primary);
+    box-shadow: 0 12px 32px rgba(11, 49, 143, 0.2);
 }
 
 .game-card.type2:hover {
-    border-color: var(--secondary-color);
-    box-shadow: 0 0 30px rgba(255, 0, 110, 0.3);
+    border-color: var(--color-cyan);
+    box-shadow: 0 12px 32px rgba(86, 193, 222, 0.2);
 }
 
 .game-card.type3:hover {
-    border-color: var(--accent-color);
-    box-shadow: 0 0 30px rgba(255, 190, 11, 0.3);
+    border-color: var(--color-orange);
+    box-shadow: 0 12px 32px rgba(248, 182, 45, 0.2);
 }
 
 .game-header {
-    padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.1);
+    padding: var(--space-lg);
+    background: var(--color-background-alt);
+    border-bottom: 1px solid rgba(13, 35, 63, 0.1);
+    position: relative;
+}
+
+/* Color accent based on game type */
+.game-card:nth-child(1) .game-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: var(--space-lg);
+    width: 60px;
+    height: 3px;
+    background: #56C1DE;
+    opacity: 0.8;
+}
+
+.game-card:nth-child(2) .game-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: var(--space-lg);
+    width: 60px;
+    height: 3px;
+    background: #F8B62D;
+    opacity: 0.8;
+}
+
+.game-card:nth-child(3) .game-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: var(--space-lg);
+    width: 60px;
+    height: 3px;
+    background: #0B318F;
+    opacity: 0.8;
 }
 
 .game-header h3 {
-    font-family: 'Orbitron', monospace;
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
+    font-family: "Arial Unicode MS", Arial, sans-serif;
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    margin-bottom: var(--space-xs);
+    letter-spacing: 0.1em;
 }
 
 .type1 .game-header h3 {
-    color: var(--primary-color);
+    color: var(--color-blue-primary);
 }
 
 .type2 .game-header h3 {
-    color: var(--secondary-color);
+    color: var(--color-cyan);
 }
 
 .type3 .game-header h3 {
-    color: var(--accent-color);
+    color: var(--color-orange);
 }
 
 .game-title {
     display: block;
-    font-size: 1.1rem;
-    color: var(--gray-text);
+    font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    font-size: var(--font-size-lg);
+    font-weight: 400;
+    color: var(--color-text-secondary);
+    letter-spacing: 0.02em;
 }
 
 .game-content {
-    padding: 1.5rem;
+    padding: var(--space-lg);
 }
 
 .target {
-    color: var(--primary-color);
-    font-weight: 700;
-    margin-bottom: 1rem;
+    font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    color: var(--color-blue-primary);
+    font-weight: 500;
+    margin-bottom: var(--space-sm);
+    font-size: var(--font-size-sm);
+}
+
+.game-content p {
+    font-family: "Hiragino Mincho ProN", "Noto Serif JP", serif;
+    font-weight: 300;
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    letter-spacing: 0.02em;
 }
 
 .game-features {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    padding: 2rem;
+    background: var(--color-white);
+    border: 1px solid rgba(13, 35, 63, 0.1);
+    border-radius: 12px;
+    padding: var(--space-2xl);
 }
 
 .game-features h3 {
-    color: var(--primary-color);
-    margin-bottom: 1.5rem;
-    font-size: 1.5rem;
+    font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-lg);
+    font-size: var(--font-size-xl);
+    font-weight: 500;
 }
 
 .game-features ul {
@@ -608,37 +936,57 @@ body {
 }
 
 .game-features li {
-    padding: 0.5rem 0;
-    padding-left: 2rem;
+    font-family: "Hiragino Mincho ProN", "Noto Serif JP", serif;
+    font-weight: 300;
+    color: var(--color-text-secondary);
+    padding: var(--space-xs) 0;
+    padding-left: var(--space-lg);
     position: relative;
+    line-height: 1.7;
+    letter-spacing: 0.02em;
 }
 
 .game-features li::before {
     content: '▶';
     position: absolute;
     left: 0;
-    color: var(--primary-color);
+    color: var(--color-blue-primary);
+    font-size: var(--font-size-sm);
 }
 
 /* Video Section */
 .video-section {
-    padding: 5rem 0;
+    padding: var(--space-3xl) 0;
+    background: var(--color-background);
 }
 
 .video-types {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--space-lg);
 }
 
 .video-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    padding: 2rem;
+    background: var(--color-white);
+    border: 1px solid rgba(13, 35, 63, 0.1);
+    border-radius: 12px;
+    padding: var(--space-xl);
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+}
+
+.video-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(86, 193, 222, 0.05) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
 }
 
 .video-card::after {
@@ -648,8 +996,13 @@ body {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    background: linear-gradient(90deg, transparent, rgba(86, 193, 222, 0.1), transparent);
     transition: left 0.5s ease;
+    pointer-events: none;
+}
+
+.video-card:hover::before {
+    opacity: 1;
 }
 
 .video-card:hover::after {
@@ -657,45 +1010,89 @@ body {
 }
 
 .video-card:hover {
-    transform: translateY(-5px);
-    border-color: var(--secondary-color);
+    transform: translateY(-6px);
+    border-color: var(--color-cyan);
+    box-shadow: 0 12px 32px rgba(86, 193, 222, 0.15);
 }
 
 .video-card h3 {
-    color: var(--secondary-color);
-    margin-bottom: 1rem;
+    font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-sm);
+    font-size: var(--font-size-xl);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+}
+
+.video-card p {
+    font-family: "Hiragino Mincho ProN", "Noto Serif JP", serif;
+    font-weight: 300;
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    letter-spacing: 0.02em;
 }
 
 /* Impact Section */
 .impact-section {
-    padding: 5rem 0;
-    background: var(--darker-bg);
+    padding: var(--space-3xl) 0;
+    background: var(--color-background-alt);
 }
 
 .impact-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-lg);
 }
 
 .impact-card {
-    background: linear-gradient(135deg, var(--card-bg), rgba(0, 255, 204, 0.1));
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    padding: 2rem;
+    background: var(--color-white);
+    border: 1px solid rgba(13, 35, 63, 0.1);
+    border-radius: 12px;
+    padding: var(--space-xl);
     text-align: center;
     transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.impact-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(248, 182, 45, 0.05) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
 }
 
 .impact-card:hover {
-    transform: translateY(-10px) rotateX(5deg);
-    box-shadow: 0 20px 40px rgba(0, 255, 204, 0.2);
+    transform: translateY(-8px);
+    box-shadow: 0 16px 40px rgba(13, 35, 63, 0.12);
+    border-color: rgba(248, 182, 45, 0.3);
+}
+
+.impact-card:hover::before {
+    opacity: 1;
 }
 
 .impact-card h3 {
-    color: var(--accent-color);
-    margin-bottom: 1rem;
-    font-size: 1.3rem;
+    font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-sm);
+    font-size: var(--font-size-xl);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+}
+
+.impact-card p {
+    font-family: "Hiragino Mincho ProN", "Noto Serif JP", serif;
+    font-weight: 300;
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    letter-spacing: 0.02em;
 }
 
 /* Business Section */
@@ -743,9 +1140,35 @@ body {
 
 /* Footer */
 .footer {
-    background: var(--darker-bg);
-    padding: 3rem 0;
-    border-top: 1px solid var(--border-color);
+    background: var(--color-background-dark);
+    padding: var(--space-2xl) 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--color-white);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Gradient decoration at the top of footer */
+.footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, 
+                #56C1DE 0%, 
+                #F8B62D 25%, 
+                #0B318F 50%, 
+                #FAEE00 75%, 
+                #56C1DE 100%);
+    background-size: 200% 100%;
+    animation: gradientSlide 10s linear infinite;
+}
+
+@keyframes gradientSlide {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
 }
 
 .footer-content {
@@ -755,17 +1178,33 @@ body {
 }
 
 .footer-brand h3 {
-    font-family: 'Orbitron', monospace;
-    color: var(--primary-color);
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--space-xs);
+    display: flex;
+    align-items: center;
+}
+
+.footer-logo {
+    height: 50px;
+    width: auto;
+    transition: all 0.3s ease;
+}
+
+.footer-logo:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1);
 }
 
 .footer-brand p {
-    color: var(--gray-text);
+    font-family: "Hiragino Mincho ProN", "Noto Serif JP", serif;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 300;
+    letter-spacing: 0.02em;
 }
 
 .footer-info {
-    color: var(--gray-text);
+    font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: var(--font-size-sm);
 }
 
 /* Responsive Design */
@@ -778,6 +1217,15 @@ body {
         max-width: 100vw !important;
         padding: 0 !important;
         margin: 0 !important;
+    }
+    
+    /* Logo Mobile Optimization */
+    .logo-img {
+        height: 30px;
+    }
+    
+    .footer-logo {
+        height: 35px;
     }
     
     * {
@@ -1092,14 +1540,74 @@ body {
     }
 }
 
+/* アクセシビリティ対応 */
+/* 高コントラストモード対応 */
+@media (prefers-contrast: high) {
+    :root {
+        --color-text-primary: #000000;
+        --color-background: #FFFFFF;
+        --color-text-secondary: #333333;
+    }
+    
+    .card, .feature-card, .game-card, .video-card, .impact-card {
+        border-color: #000000;
+        box-shadow: none;
+    }
+}
+
+/* 動きを減らす設定への対応 */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .hero-title {
+        animation: none;
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    .subtitle, .tagline, .cta-button {
+        animation: none;
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* フォント読み込みエラー対応 */
+@font-face {
+    font-family: 'Hiragino Fallback';
+    src: local('Hiragino Kaku Gothic ProN'),
+         local('Hiragino Sans'),
+         local('Yu Gothic'),
+         local('Meiryo'),
+         local('Noto Sans JP');
+    font-display: swap;
+}
+
 /* Animation Classes */
 .fade-in {
     opacity: 0;
     transform: translateY(30px);
-    transition: all 0.8s ease;
+    transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .fade-in.visible {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* タッチデバイス最適化 */
+@media (hover: none) and (pointer: coarse) {
+    .card:hover, .feature-card:hover, .game-card:hover, 
+    .video-card:hover, .impact-card:hover {
+        transform: none;
+        box-shadow: 0 2px 8px rgba(13, 35, 63, 0.08);
+    }
+    
+    .cta-button:hover, .btn-primary:hover {
+        transform: none;
+    }
 } 
